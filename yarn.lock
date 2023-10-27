@@ -69,6 +69,11 @@ arg@^4.1.0:
   resolved "https://registry.yarnpkg.com/arg/-/arg-4.1.3.tgz#269fc7ad5b8e42cb63c896d5666017261c144089"
   integrity sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==
 
+bun-types@latest:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/bun-types/-/bun-types-1.0.7.tgz#b206cc2db0739e22befbb3f78bac2df223c58221"
+  integrity sha512-zlIp+SCutbbugs6xDy+3WC3KO3zKySpF/bRfiTk/VJUdKt+WHAzlCtLplS7XglRYDFzhRhlzXMW/R5BHkw+u2Q==
+
 bunrest@^1.3.6:
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/bunrest/-/bunrest-1.3.6.tgz#6beafe3012930f6e4286e392c3d87eeaa1e929c7"
