@@ -47,6 +47,7 @@ interface CorsOptions {
  *
  * ```ts
  * import server from "bunrest";
+ * import cors from "buncors";
  * const app = server();
  *
  * app.post("/auth", cors(), async (req, res) => {
@@ -63,6 +64,7 @@ interface CorsOptions {
  *
  * ```ts
  * import server from "bunrest";
+ * import cors from "buncors";
  * const app = server();
  *
  * app.post("/auth", async (req, res) => {

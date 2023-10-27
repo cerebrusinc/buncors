@@ -25,6 +25,7 @@ Access-Control-Max-Age: 5
 
 ```ts
 import server from "bunrest";
+import cors from "buncors";
 const app = server();
 
 app.post("/auth", cors(), async (req, res) => {
@@ -41,6 +42,7 @@ app.listen(Bun.env.PORT, () => {
 
 ```ts
 import server from "bunrest";
+import cors from "buncors";
 const app = server();
 
 app.post("/auth", async (req, res) => {
