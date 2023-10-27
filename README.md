@@ -89,6 +89,13 @@ app.listen(Bun.env.PORT, () => {
 ## v0.1.x
 
 <details open>
+<summary><strong>v0.1.2</strong></summary>
+
+- Removed console log statement
+</details>
+<br />
+
+<details>
 <summary><strong>v0.1.1</strong></summary>
 
 - Added lib to NPM
@@ -100,4 +107,3 @@ app.listen(Bun.env.PORT, () => {
 
 - Initial commit
 </details>
-<br />

@@ -1,6 +1,6 @@
 {
 	"name": "buncors",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "A tool that brings expressjs 'cors' functionality to bun's 'bunrest' package.",
 	"author": {
 		"name": "Lewis Mosho Jr | Cerebrus Inc",

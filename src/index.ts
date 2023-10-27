@@ -207,7 +207,6 @@ function cors(options?: CorsOptions): Handler {
 						.status(406)
 						.send("");
 				}
-				console.log("\nheaders\n", res.getHeader(), "\n");
 				break;
 			default:
 				// @ts-ignore
