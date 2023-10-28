@@ -44,7 +44,23 @@ interface CorsOptions {
  *
  * **NOTE:** The allow headers will always append `Content-Type` to your response headers so no need to add it to the list
  *
- * ### Usage Example
+ * ## Usage Examples
+ *
+ * **Globally**
+ *
+ * ```ts
+ * import server from "bunrest";
+ * import cors from "buncors";
+ * const app = server();
+ *
+ * app.use(cors());
+ *
+ * app.listen(Bun.env.PORT, () => {
+ * 	console.log(`[startup]: Server running on port "${Bun.env.PORT}"`);
+ * });
+ * ```
+ *
+ * **Specific Route**
  *
  * ```ts
  * import server from "bunrest";
@@ -52,12 +68,12 @@ interface CorsOptions {
  * const app = server();
  *
  * app.post("/auth", cors(), async (req, res) => {
- *      // some processing code
- *      res.status(200).json({ success: true });
+ * 	// some processing code
+ * 	res.status(200).json({ success: true });
  * });
  *
  * app.listen(Bun.env.PORT, () => {
- *      console.log(`[startup]: Server running on port "${Bun.env.PORT}"`);
+ * 	console.log(`[startup]: Server running on port "${Bun.env.PORT}"`);
  * });
  * ```
  *
@@ -76,7 +92,7 @@ interface CorsOptions {
  * app.options("/auth", cors({
  *      allowedHeaders: ["X-TOKEN"],
  *      methods: ["POST"],
- *      origins: ["https://www.cerebrus.dev"]
+ *      origins: ["www.cerebrus.dev"]
  * }));
  *
  * app.listen(Bun.env.PORT, () => {

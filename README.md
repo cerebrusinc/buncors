@@ -19,7 +19,7 @@ Access-Control-Max-Age: 5
 
 **NOTE:** The allow headers will always append `Content-Type` to your response headers so no need to add it to the list.
 
-## Usage Example
+## Usage Examples
 
 **Globally**
 
