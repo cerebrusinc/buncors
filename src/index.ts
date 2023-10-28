@@ -119,7 +119,9 @@ function cors(options?: CorsOptions): Handler {
 		let valid: boolean = true;
 
 		headersArr.map((h) => {
-			allowedHeadersArr.includes(h.toLowerCase()) ? null : (valid = false);
+			allowedHeadersArr.includes(h.toLowerCase().trim())
+				? null
+				: (valid = false);
 		});
 
 		return valid;
@@ -177,7 +179,6 @@ function cors(options?: CorsOptions): Handler {
 				const requestHeaders = req.headers
 					? req.headers["access-control-request-headers"]
 					: null;
-				console.log(requestHeaders);
 				const isValidHeaders = requestHeaders
 					? _isValidRequestHeaders(requestHeaders)
 					: true;

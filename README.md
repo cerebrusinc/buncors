@@ -93,11 +93,19 @@ app.listen(Bun.env.PORT, () => {
 ## v0.2.x
 
 <details open>
+<summary><strong>v0.2.1</strong></summary>
+
+- Removed console log statement
+- Handling spaces in allowedHeaders request
+</details>
+<br />
+
+<details>
 <summary><strong>v0.2.0</strong></summary>
 
 - Updated handler to manage allowedHeaders regardless of ordering or case
-- Enabled non preflight requests returning headers EXCEPT allowedMethods  
- - Now you can send exposed headers back to the client
+- Enabled non preflight requests returning headers EXCEPT allowedMethods
+- Now you can send exposed headers back to the client
 </details>
 <br />
 
