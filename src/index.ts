@@ -162,7 +162,7 @@ function cors(options?: CorsOptions): Handler {
 		}
 	};
 
-	const middelware: Handler = (req, res, next?, err?) => {
+	const middelware: Handler = (req, res, next?) => {
 		switch (req.method) {
 			case "OPTIONS":
 				// Get the origin header and compare it's value to the initialised value

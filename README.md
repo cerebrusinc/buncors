@@ -6,8 +6,6 @@
 
 The cors middleware that enables a [bunrest](https://www.npmjs.com/package/bunrest) server to handle cors requests. It also handles preflight requests 😃.
 
-This version depends on **bunrest** `^1.3.6`
-
 ## Default Response Headers
 
 If no options are provided, the response headers will be as follows:
@@ -22,6 +20,22 @@ Access-Control-Max-Age: 5
 **NOTE:** The allow headers will always append `Content-Type` to your response headers so no need to add it to the list.
 
 ## Usage Example
+
+**Globally**
+
+```ts
+import server from "bunrest";
+import cors from "buncors";
+const app = server();
+
+app.use(cors());
+
+app.listen(Bun.env.PORT, () => {
+	console.log(`[startup]: Server running on port "${Bun.env.PORT}"`);
+});
+```
+
+**Specific Route**
 
 ```ts
 import server from "bunrest";
@@ -57,7 +71,7 @@ app.options(
 	cors({
 		allowedHeaders: ["X-TOKEN"],
 		methods: ["POST"],
-		origins: ["https://www.cerebrus.dev"],
+		origins: ["www.cerebrus.dev"],
 	})
 );
 
@@ -93,6 +107,13 @@ app.listen(Bun.env.PORT, () => {
 ## v0.2.x
 
 <details open>
+<summary><strong>v0.2.3</strong></summary>
+
+- Added gloabl decleration compatibility
+</details>
+<br />
+
+<details>
 <summary><strong>v0.2.2</strong></summary>
 
 - Better handling of wildcard origin
