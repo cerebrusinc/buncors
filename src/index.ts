@@ -1,4 +1,5 @@
 import { Handler } from "bunrest/src/server/request";
+import { BunResponse } from "bunrest/src/server/response";
 
 /**
  * ```ts
@@ -113,7 +114,50 @@ function cors(options?: CorsOptions): Handler {
 	};
 
 	const _isValidRequestHeaders = (headers: string): boolean => {
-		return allowedHeaders.join(",").toLowerCase().includes(headers);
+		const headersArr = headers.split(",");
+		const allowedHeadersArr = allowedHeaders.join(",").toLowerCase().split(",");
+		let valid: boolean = true;
+
+		headersArr.map((h) => {
+			allowedHeadersArr.includes(h.toLowerCase()) ? null : (valid = false);
+		});
+
+		return valid;
+	};
+
+	const _validReqHandler = (
+		res: BunResponse,
+		resHeaders: { [key: string]: any }
+	): void => {
+		switch (Array.isArray(origins)) {
+			case true:
+				resHeaders["Access-Control-Allow-Origin"] = origin;
+				res.setHeader("Access-Control-Allow-Origin", origin);
+
+				resHeaders["Vary"] = "Accept-Encoding, Origin";
+				res.setHeader("Vary", "Accept-Encoding, Origin");
+
+				break;
+			default:
+				resHeaders["Access-Control-Allow-Origin"] = "*";
+				res.setHeader("Access-Control-Allow-Origin", "*");
+		}
+
+		resHeaders["Access-Control-Allow-Headers"] = allowedHeaders.join(",");
+		res.setHeader("Access-Control-Allow-Headers", allowedHeaders.join(","));
+
+		resHeaders["Access-Control-Max-Age"] = maxAge;
+		res.setHeader("Access-Control-Max-Age", maxAge);
+
+		if (allowCredentials) {
+			resHeaders["Access-Control-Allow-Credentials"] = `${allowCredentials}`;
+			res.setHeader("Access-Control-Allow-Credentials", `${allowCredentials}`);
+		}
+
+		if (exposedHeaders) {
+			resHeaders["Access-Control-Expose-Headers"] = exposedHeaders.join(",");
+			res.setHeader("Access-Control-Expose-Headers", exposedHeaders.join(","));
+		}
 	};
 
 	const middelware: Handler = (req, res, next?, err?) => {
@@ -133,56 +177,17 @@ function cors(options?: CorsOptions): Handler {
 				const requestHeaders = req.headers
 					? req.headers["access-control-request-headers"]
 					: null;
+				console.log(requestHeaders);
 				const isValidHeaders = requestHeaders
 					? _isValidRequestHeaders(requestHeaders)
 					: true;
 
 				if (isvalidOrigin && isValidMethod && isValidHeaders) {
 					const resHeaders: { [key: string]: any } = {};
-					switch (Array.isArray(origins)) {
-						case true:
-							resHeaders["Access-Control-Allow-Origin"] = origin;
-							res.setHeader("Access-Control-Allow-Origin", origin);
-
-							resHeaders["Vary"] = "Accept-Encoding, Origin";
-							res.setHeader("Vary", "Accept-Encoding, Origin");
-
-							break;
-						default:
-							resHeaders["Access-Control-Allow-Origin"] = "*";
-							res.setHeader("Access-Control-Allow-Origin", "*");
-					}
+					_validReqHandler(res, resHeaders);
 
 					resHeaders["Access-Control-Allow-Methods"] = methods.join(",");
 					res.setHeader("Access-Control-Allow-Methods", methods.join(","));
-
-					resHeaders["Access-Control-Allow-Headers"] = allowedHeaders.join(",");
-					res.setHeader(
-						"Access-Control-Allow-Headers",
-						allowedHeaders.join(",")
-					);
-
-					resHeaders["Access-Control-Max-Age"] = maxAge;
-					res.setHeader("Access-Control-Max-Age", maxAge);
-
-					if (allowCredentials) {
-						resHeaders[
-							"Access-Control-Allow-Credentials"
-						] = `${allowCredentials}`;
-						res.setHeader(
-							"Access-Control-Allow-Credentials",
-							`${allowCredentials}`
-						);
-					}
-
-					if (exposedHeaders) {
-						resHeaders["Access-Control-Expose-Headers"] =
-							exposedHeaders.join(",");
-						res.setHeader(
-							"Access-Control-Expose-Headers",
-							exposedHeaders.join(",")
-						);
-					}
 
 					res
 						.option({
@@ -214,8 +219,23 @@ function cors(options?: CorsOptions): Handler {
 				// @ts-ignore
 				const host = req.headers["host"];
 				const isvalidOriginNoPreflight = _isOrigin(host);
+				const isValidMethodNoPreflight = _isValidMethod(req.method);
 
-				if (!isvalidOriginNoPreflight) {
+				if (isvalidOriginNoPreflight && isValidMethodNoPreflight) {
+					const resHeaders: { [key: string]: any } = {};
+					_validReqHandler(res, resHeaders);
+
+					res
+						.option({
+							headers: resHeaders,
+						})
+						.headers(resHeaders);
+				} else if (!isValidMethodNoPreflight) {
+					res
+						.option({ status: 405, statusText: "405 Method Not Allowed" })
+						.status(405)
+						.send("");
+				} else {
 					res.status(400).send("");
 				}
 				// @ts-ignore

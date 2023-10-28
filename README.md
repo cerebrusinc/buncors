@@ -40,6 +40,8 @@ app.listen(Bun.env.PORT, () => {
 
 ## Preflight Example
 
+Note that in most cases, you will not have to explicity handle a preflight request separately.
+
 ```ts
 import server from "bunrest";
 import cors from "buncors";
@@ -88,9 +90,20 @@ app.listen(Bun.env.PORT, () => {
 
 # Changelog
 
-## v0.1.x
+## v0.2.x
 
 <details open>
+<summary><strong>v0.2.0</strong></summary>
+
+- Updated handler to manage allowedHeaders regardless of ordering or case
+- Enabled non preflight requests returning headers EXCEPT allowedMethods  
+ - Now you can send exposed headers back to the client
+</details>
+<br />
+
+## v0.1.x
+
+<details>
 <summary><strong>v0.1.2</strong></summary>
 
 - Removed console log statement
