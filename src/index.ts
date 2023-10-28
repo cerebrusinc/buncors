@@ -104,9 +104,9 @@ function cors(options?: CorsOptions): Handler {
 		? options.exposedHeaders
 		: undefined;
 
-	const _isOrigin = (header: string): boolean => {
-		if (Array.isArray(origins)) return origins.includes(header);
-		else return true;
+	const _isOrigin = (path: string): boolean => {
+		if (Array.isArray(origins)) return origins.includes(path);
+		else return path === origins;
 	};
 
 	const _isValidMethod = (method: string): boolean => {
@@ -167,8 +167,7 @@ function cors(options?: CorsOptions): Handler {
 			case "OPTIONS":
 				// Get the origin header and compare it's value to the initialised value
 				const origin = req.headers ? req.headers["origin"] : "*";
-				const isvalidOrigin = _isOrigin(origin);
-
+				const isvalidOrigin = origins === "*" ? true : _isOrigin(origin);
 				// Get the request method header (if none, then use the request mehtod) and compare it's value to the initialised value
 				const method = req.headers
 					? req.headers["access-control-request-method"]
@@ -219,7 +218,8 @@ function cors(options?: CorsOptions): Handler {
 			default:
 				// @ts-ignore
 				const host = req.headers["host"];
-				const isvalidOriginNoPreflight = _isOrigin(host);
+				const isvalidOriginNoPreflight =
+					origins === "*" ? true : _isOrigin(host);
 				const isValidMethodNoPreflight = _isValidMethod(req.method);
 
 				if (isvalidOriginNoPreflight && isValidMethodNoPreflight) {

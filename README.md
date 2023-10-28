@@ -93,6 +93,13 @@ app.listen(Bun.env.PORT, () => {
 ## v0.2.x
 
 <details open>
+<summary><strong>v0.2.2</strong></summary>
+
+- Better handling of wildcard origin
+</details>
+<br />
+
+<details>
 <summary><strong>v0.2.1</strong></summary>
 
 - Removed console log statement
